@@ -29,20 +29,39 @@ kotlin {
     }
     
     sourceSets {
-        
+        iosMain.dependencies {
+            implementation(libs.ktor.ios)
+        }
         androidMain.dependencies {
             implementation(compose.preview)
+
             implementation(libs.androidx.activity.compose)
+
+            implementation(libs.koin.android)
+            implementation(libs.koin.androidx.compose)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
+            implementation(compose.material3)
+            implementation(compose.materialIconsExtended)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.vm)
+            api(libs.koin.core)
+
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.serialization.kotlinx.json)
+
+            implementation(libs.navigation.compose)
         }
     }
 }
