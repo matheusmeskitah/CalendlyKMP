@@ -11,17 +11,24 @@ import io.ktor.client.request.get
 class AvailableTimeRepositoryImpl : AvailableTimeRepository {
     override suspend fun getAvailableTimes(
         startDate: String,
-        endDate: String
+        endDate: String,
+        month: String
     ): Result<AvailableTime> {
         return try {
             val response: AvailableTimeDTO? = client.get("available_times") {
+                headers.append("x-mock-response-name", month)
+
                 url {
                     parameters.append("start_date_time", startDate)
                     parameters.append("end_date_time", endDate)
                 }
             }.body()
 
-            Result.success(response?.toAvailableTime() ?: throw Exception())
+            response?.toAvailableTime()?.let {
+                if (it.data.availableTimes.isEmpty())
+                    Result.failure(Exception("No available dates to book"))
+                else Result.success(it)
+            } ?: throw Exception("Error retrieving data")
         } catch (e: Exception) {
             Result.failure(e)
         }

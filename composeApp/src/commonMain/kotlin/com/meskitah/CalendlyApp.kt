@@ -8,7 +8,7 @@ import org.koin.compose.KoinContext
 
 @Composable
 @Preview
-fun App() {
+fun CalendlyApp() {
     KoinContext {
         CalendlyTheme {
             CalendlyNavGraph()

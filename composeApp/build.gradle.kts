@@ -56,6 +56,8 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
 
+            implementation(libs.datetime)
+
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.vm)
             api(libs.koin.core)

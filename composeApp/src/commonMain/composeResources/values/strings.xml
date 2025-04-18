@@ -1,0 +1,13 @@
+<resources>
+    <!--  App  -->
+    <string name="app_name">Calendly KMP</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+
+    <!--  Available Time Screen  -->
+    <string name="interviewer_name">Arvind Menon</string>
+    <string name="interview_duration">30 Minute Interview</string>
+    <string name="interview_duration_short">30 min</string>
+    <string name="interview_format_detail">Web conferencing details provided upon confirmation.</string>
+    <string name="select_a_day">Select a Day</string>
+</resources>
