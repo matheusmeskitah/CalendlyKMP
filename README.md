@@ -61,18 +61,6 @@ curl \
 
 ---
 
-### 📤 Simulated API Payload Output
-
-After selecting a time and filling out the form, the app displays a JSON payload that would be sent to a backend service:
-
-{
-  "name": "Jane Doe",
-  "email": "jane@example.com",
-  "time": "2025-04-10T14:00:00Z"
-}
-
----
-
 ### 📲 Running the App
 
 - Android
