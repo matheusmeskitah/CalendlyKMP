@@ -27,6 +27,9 @@ class AvailableTimeViewModel(
         when (event) {
             AvailableTimeEvent.CloseDatePicker -> _state.update { it.copy(showDatePicker = false) }
             AvailableTimeEvent.GetAvailableTime -> getAvailableTime()
+            is AvailableTimeEvent.LaunchSnackBar -> viewModelScope.launch {
+                _state.value.snackbarHostState.showSnackbar(event.message)
+            }
         }
     }
 

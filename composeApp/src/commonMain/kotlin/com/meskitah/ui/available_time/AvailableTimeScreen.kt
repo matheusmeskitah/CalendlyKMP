@@ -54,9 +54,12 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun AvailableTimeScreenRoot(
     viewModel: AvailableTimeViewModel = koinViewModel<AvailableTimeViewModel>(),
-    navController: NavController
+    navController: NavController,
+    message: String?
 ) {
     val state by viewModel.state.collectAsState()
+
+    message?.let { viewModel.handleEvent(AvailableTimeEvent.LaunchSnackBar(it)) }
 
     AvailableTimeScreen(
         state = state,

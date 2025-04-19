@@ -43,8 +43,13 @@ import calendlykmp.composeapp.generated.resources.Res
 import calendlykmp.composeapp.generated.resources.duration
 import calendlykmp.composeapp.generated.resources.select_a_time
 import calendlykmp.composeapp.generated.resources.time_zone
+import com.meskitah.core.utils.capitalizeFirstChar
 import com.meskitah.core.utils.fullDateFormat
+import com.meskitah.core.utils.toLong
+import com.meskitah.ui.navigation.CalendlyDestination
 import com.meskitah.ui.theme.CalendlyTheme
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.LocalTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.format
 import org.jetbrains.compose.resources.stringResource
@@ -68,7 +73,16 @@ fun SelectTimeScreenRoot(
         onSetTimeZone = { viewModel.handleEvent(SelectTimeEvent.SetTimeZone(it)) },
         onTimeZoneType = { viewModel.handleEvent(SelectTimeEvent.TimeZoneType(it)) },
         onTimeClick = {
-            //TODO
+            navController.navigate(
+                CalendlyDestination.EventDetails(
+                    selectedDate = LocalDateTime(
+                        date = state.selectedDate,
+                        time = LocalTime.parse(it)
+                    ).toLong(state.timeZone),
+                    selectedTime = it,
+                    selectedTimeZoneId = state.timeZone.id
+                )
+            )
         }
     )
 }
@@ -97,7 +111,7 @@ private fun SelectTimeScreen(
                 },
                 title = {
                     Column {
-                        Text(text = state.selectedDate.dayOfWeek.name)
+                        Text(text = state.selectedDate.dayOfWeek.name.capitalizeFirstChar())
                         Text(text = state.selectedDate.format(fullDateFormat()))
                     }
                 }
