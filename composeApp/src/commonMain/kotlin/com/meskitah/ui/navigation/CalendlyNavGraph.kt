@@ -6,10 +6,11 @@ import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun CalendlyNavGraph() {
+    val navController = rememberNavController()
     NavHost(
-        navController = rememberNavController(),
+        navController = navController,
         startDestination = CalendlyDestination.Root
     ) {
-        mainNavGraph()
+        mainNavGraph(navController = navController)
     }
 }

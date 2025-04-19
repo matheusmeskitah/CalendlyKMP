@@ -5,14 +5,15 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed class CalendlyDestination {
     @Serializable
-    data object Root: CalendlyDestination()
+    data object Root : CalendlyDestination()
 
     @Serializable
-    data object AvailableTime: CalendlyDestination()
+    data object AvailableTime : CalendlyDestination()
 
     @Serializable
-    data object SelectTime: CalendlyDestination()
+    data class SelectTime(val selectedDate: Long, val availableTimes: List<String>) :
+        CalendlyDestination()
 
     @Serializable
-    data object EventDetail: CalendlyDestination()
+    data object EventDetail : CalendlyDestination()
 }

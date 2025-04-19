@@ -25,6 +25,12 @@ fun requestDateFormat(): DateTimeFormat<LocalDateTime> {
     }
 }
 
+fun fullDateFormat(): DateTimeFormat<LocalDate> {
+    return LocalDate.Format {
+        monthName(MonthNames.ENGLISH_FULL); char(' '); dayOfMonth(); char(','); char(' '); year()
+    }
+}
+
 fun getLastDayOfMonth(year: Int, month: Int): LocalDate {
     val firstDayOfNextMonth = if (month == 12)
         LocalDate(year + 1, 1, 1)
@@ -37,4 +43,9 @@ fun millisToLocalDate(millis: Long): LocalDate {
     val instant = Instant.fromEpochMilliseconds(millis)
     val localDateTime = instant.toLocalDateTime(TimeZone.UTC)
     return localDateTime.date
+}
+
+fun Long.toLocalDate(): LocalDate {
+    return Instant.fromEpochMilliseconds(this)
+        .toLocalDateTime(TimeZone.UTC).date
 }

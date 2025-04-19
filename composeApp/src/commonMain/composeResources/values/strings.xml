@@ -10,4 +10,9 @@
     <string name="interview_duration_short">30 min</string>
     <string name="interview_format_detail">Web conferencing details provided upon confirmation.</string>
     <string name="select_a_day">Select a Day</string>
+
+    <!--  Select Time Screen  -->
+    <string name="time_zone">Time zone</string>
+    <string name="select_a_time">Select a Time</string>
+    <string name="duration">Duration: 30 min</string>
 </resources>

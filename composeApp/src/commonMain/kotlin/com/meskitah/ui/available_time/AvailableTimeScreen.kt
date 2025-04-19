@@ -30,6 +30,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import calendlykmp.composeapp.generated.resources.Res
 import calendlykmp.composeapp.generated.resources.app_name
 import calendlykmp.composeapp.generated.resources.cancel
@@ -40,6 +41,8 @@ import calendlykmp.composeapp.generated.resources.interviewer_name
 import calendlykmp.composeapp.generated.resources.ok
 import calendlykmp.composeapp.generated.resources.select_a_day
 import com.meskitah.core.utils.millisToLocalDate
+import com.meskitah.core.utils.toLocalDate
+import com.meskitah.ui.navigation.CalendlyDestination
 import com.meskitah.ui.theme.CalendlyTheme
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
@@ -50,14 +53,19 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun AvailableTimeScreenRoot(
-    viewModel: AvailableTimeViewModel = koinViewModel<AvailableTimeViewModel>()
+    viewModel: AvailableTimeViewModel = koinViewModel<AvailableTimeViewModel>(),
+    navController: NavController
 ) {
     val state by viewModel.state.collectAsState()
 
     AvailableTimeScreen(
         state = state,
         onShowDatePicker = { viewModel.handleEvent(AvailableTimeEvent.GetAvailableTime) },
-        onCloseDatePicker = { viewModel.handleEvent(AvailableTimeEvent.CloseDatePicker) })
+        onCloseDatePicker = { viewModel.handleEvent(AvailableTimeEvent.CloseDatePicker) },
+        onGoToSelectTime = { selectedDate, timesInDate ->
+            navController.navigate(CalendlyDestination.SelectTime(selectedDate, timesInDate))
+        }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -66,17 +74,12 @@ private fun AvailableTimeScreen(
     modifier: Modifier = Modifier,
     state: AvailableTimeState,
     onShowDatePicker: () -> Unit,
-    onCloseDatePicker: () -> Unit
+    onCloseDatePicker: () -> Unit,
+    onGoToSelectTime: (Long, List<String>) -> Unit
 ) {
     Scaffold(
         modifier = modifier,
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(stringResource(Res.string.app_name))
-                }
-            )
-        },
+        topBar = { TopAppBar(title = { Text(stringResource(Res.string.app_name)) }) },
         bottomBar = {
             BottomAppBar {
                 Button(
@@ -122,7 +125,16 @@ private fun AvailableTimeScreen(
                 onDismissRequest = onCloseDatePicker,
                 confirmButton = {
                     Button(
-                        onClick = onCloseDatePicker
+                        onClick = {
+                            onCloseDatePicker()
+                            datePickerState.selectedDateMillis?.let {
+                                val selectedLocalDate = it.toLocalDate()
+                                val timesInSelectedDate = state.availableTime.data.availableTimes
+                                    .filter { it.date == selectedLocalDate }
+                                    .map { it.time.toString() }
+                                onGoToSelectTime(it, timesInSelectedDate)
+                            }
+                        }
                     ) {
                         Text(text = stringResource(Res.string.ok))
                     }
@@ -200,7 +212,8 @@ private fun AvailableTimeScreenPreview() {
         AvailableTimeScreen(
             state = AvailableTimeState(),
             onShowDatePicker = {},
-            onCloseDatePicker = {}
+            onCloseDatePicker = {},
+            onGoToSelectTime = { _, _ -> }
         )
     }
 }
