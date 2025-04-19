@@ -75,24 +75,6 @@ Requires Compose Multiplatform + Kotlin Native configured. Follow JetBrains’ C
 
 ---
 
-### 🔧 Key Dependencies
-
-// Compose Multiplatform
-implementation(compose.runtime)
-implementation(compose.foundation)
-implementation(compose.material)
-
-// Ktor Client
-implementation("io.ktor:ktor-client-core")
-implementation("io.ktor:ktor-client-darwin") // for iOS
-implementation("io.ktor:ktor-client-okhttp") // for Android
-implementation("io.ktor:ktor-client-logging")
-
-// Serialization
-implementation("org.jetbrains.kotlinx:kotlinx-serialization-json")
-
----
-
 ### 📄 License
 
 MIT License © 2025 Matheus Mesquita
