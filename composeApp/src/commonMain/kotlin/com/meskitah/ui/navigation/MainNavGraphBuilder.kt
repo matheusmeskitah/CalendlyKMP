@@ -1,6 +1,5 @@
 package com.meskitah.ui.navigation
 
-import androidx.compose.runtime.remember
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -18,9 +17,7 @@ fun NavGraphBuilder.mainNavGraph(navController: NavController) {
         startDestination = CalendlyDestination.AvailableTime::class
     ) {
         composable<CalendlyDestination.AvailableTime> {
-            val message = remember(it) {
-                it.toRoute<CalendlyDestination.AvailableTime>().message
-            }
+            val message = it.toRoute<CalendlyDestination.AvailableTime>().message
 
             AvailableTimeScreenRoot(navController = navController, message = message)
         }

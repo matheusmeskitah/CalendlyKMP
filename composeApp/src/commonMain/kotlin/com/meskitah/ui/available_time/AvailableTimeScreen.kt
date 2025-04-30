@@ -25,6 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -59,7 +60,9 @@ fun AvailableTimeScreenRoot(
 ) {
     val state by viewModel.state.collectAsState()
 
-    message?.let { viewModel.handleEvent(AvailableTimeEvent.LaunchSnackBar(it)) }
+    LaunchedEffect(message) {
+        message?.let { viewModel.handleEvent(AvailableTimeEvent.LaunchSnackBar(it)) }
+    }
 
     AvailableTimeScreen(
         state = state,
